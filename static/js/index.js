@@ -1,12 +1,3 @@
-/*===============================================
-The SVG chalk filter was found in a pen by Johan Gorter.
-The AI was heavily 'inspired' by Alex Wilkerson(free code camp).
-
-
-==================================================*/
-
-
-
 //Draw the grid lines----------------------------------
 $('#v1').delay(500).animate({'stroke-dashoffset': 0},500);
 $('#v2').delay(1000).animate({'stroke-dashoffset': 0},500);
@@ -51,27 +42,10 @@ function setMessage(str) {
 function startGame() {
     resetBoard();
 
-    //Should user be able to choose symbol every game????
-    if(round < 1) {
-      //prevent game starting before grid lines 'drawn'
-      setTimeout(function() {
-        
-        $('.ex').click(function() {
-          userSign = "X";
-          compSign = "O";
-          setMessage('Click a tile to start');
-          userTurn = true;
-        });
-
-        $('.oh').click(function() {
-          userSign = "O";
-          compSign = "X";
-          setMessage('Computer will begin');
-          userTurn = false;
-          setTimeout(compMove, 1000);
-        });
-      },3000);
-    }
+     userSign = "X";
+     compSign = "O";
+     setMessage('Click a tile to start');
+     userTurn = true;
 
     round += 1;
 
@@ -142,7 +116,7 @@ function compMove() {
 
     turns += 1;
     userTurn = true;
-    //console.log(board + " " + turns);
+    console.log(board + " " + turns);
 
     if(win(board) === compSign) {
 
@@ -233,4 +207,4 @@ function win(testBoard) {
   }
 
 startGame();
-  playerMove();
+playerMove();
