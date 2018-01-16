@@ -81,6 +81,8 @@ function playerMove() {
         turns += 1;
         t.addClass('full');
 
+        console.log("train data: [" + board + "," + turns + "]");
+
         if(win(board) === userSign) {
 
           setMessage('YOU WIN!');
@@ -116,7 +118,8 @@ function compMove() {
 
     turns += 1;
     userTurn = true;
-    console.log(board + " " + turns);
+//    console.log(board + " " + turns);
+    console.log("train target: [" + board + "]");
 
     if(win(board) === compSign) {
 
