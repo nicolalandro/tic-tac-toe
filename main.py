@@ -1,4 +1,4 @@
-from flask import Flask, render_template, jsonify
+from flask import Flask, render_template, jsonify, request
 from sklearn.externals import joblib
 
 # webapp
@@ -12,9 +12,11 @@ def main():
     return render_template('index.html')
 
 
-@app.route('/api/decision_tree_for_o')
+@app.route('/api/decision_tree_for_o', methods=['POST'])
 def ai_game_for_O():
-    return jsonify(results=str(decision_tree.predict([[0, 0, 0, 0, 1, 0, 0, 0, 0]])[0]))
+    sring_array = request.get_json()
+    int_array = list(map(int, sring_array))
+    return jsonify(results=str(decision_tree.predict([int_array])[0]))
 
 
 if __name__ == '__main__':
