@@ -12,3 +12,7 @@ print("Data Value:", 0, 7)
 print("Predict Value", clf.predict([[0, 0, 0, 0, 1, 0, 0, 0, 0], [2, 1, 0, 0, 1, 0, 0, 0, 0]]))
 
 joblib.dump(clf, 'data/parsing_tree.pkl')
+
+decision_tree = joblib.load('data/parsing_tree.pkl')
+print("Data Value:", 0)
+print("Predict Value", decision_tree.predict([[0, 0, 0, 0, 1, 0, 0, 0, 0]]))
