@@ -94,10 +94,23 @@ function playerMove() {
         } else {
           setMessage('Computers move');
           setTimeout(compMoveWithMinMax,1000);
+          compMove();
         }
       }
     });
   }
+
+function compMove() {
+    $.ajax({
+                        url: "/api/decision_tree_for_o",
+                        method: "POST",
+                        contentType: "application/json",
+                        data: JSON.stringify(board),
+                        success: function(t) {
+                            console.log(t);
+                        }
+            });
+}
 
 function compMoveWithMinMax() {
     minimax();
