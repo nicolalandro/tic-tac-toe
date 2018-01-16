@@ -23,13 +23,13 @@ function addSymbols() {
 
 var userTurn, userSign, compSign, turns, round = 0,
       board = [
-        "E", "E", "E",
-        "E", "E", "E",
-        "E", "E", "E"
+        "0", "0", "0",
+        "0", "0", "0",
+        "0", "0", "0"
       ];
 
   function resetBoard() {
-    board = ["E", "E", "E","E", "E", "E","E", "E", "E"];
+    board = ["0", "0", "0","0", "0", "0","0", "0", "0"];
     $('.tile').removeClass('full');
     turns = 0;
     addSymbols();
@@ -42,17 +42,17 @@ function setMessage(str) {
 function startGame() {
     resetBoard();
 
-     userSign = "X";
-     compSign = "O";
+     userSign = "1";
+     compSign = "2";
      setMessage('Click a tile to start');
      userTurn = true;
 
     round += 1;
 
-    if(round > 0 && userSign == "X") {
+    if(round > 0 && userSign == "1") {
       setMessage('Your move');
       userTurn = true;
-    } else if(round > 0 && userSign == "O") {
+    } else if(round > 0 && userSign == "2") {
       setMessage('Computers move');
       userTurn = false;
       compMove();
@@ -69,7 +69,7 @@ function playerMove() {
         setMessage("Choose an empty tile");
       } else if(userTurn){
         
-        if(userSign == "X") {
+        if(userSign == "1") {
           drawCross(t);
           userTurn = false;
         } else {
@@ -106,7 +106,7 @@ function compMoveWithMinMax() {
       var t = $(this);
 
       if(board[i] === compSign) {
-        if(compSign == "X") {
+        if(compSign == "1") {
           drawCross(t);
         } else {
           drawNaught(t);
@@ -147,10 +147,10 @@ function minimax() {
           scores = [];
 
       //change player
-      if(tempPlayer === "X") {
-        tempPlayer = "O";
+      if(tempPlayer === "1") {
+        tempPlayer = "2";
       } else {
-        tempPlayer = "X";
+        tempPlayer = "1";
       }
 
       // find all empty board states and fill
@@ -158,7 +158,7 @@ function minimax() {
       // use the results to make array of scores
       for(var i = 0; i < tempBoard.length; i++) {
         var newBoard = tempBoard.slice();
-        if(newBoard[i] === "E") {
+        if(newBoard[i] === "0") {
           newBoard[i] = tempPlayer;
           moves.push(i);
           scores.push(recur(newBoard, tempPlayer, currentDepth + 1));
@@ -191,7 +191,7 @@ function win(testBoard) {
 
     for (var i = 0; i < winStates.length; i++) {
       winner = check(testBoard, winStates[i][0], winStates[i][1], winStates[i][2]);
-      if (winner !== "E"){
+      if (winner !== "0"){
         return winner;
       }
     }
@@ -199,10 +199,10 @@ function win(testBoard) {
   }
 
   function check(testBoard, place1, place2, place3) {
-    if (testBoard[place1] !== "E" && testBoard[place1] === testBoard[place2] && testBoard[place1] === testBoard[place3]){
+    if (testBoard[place1] !== "0" && testBoard[place1] === testBoard[place2] && testBoard[place1] === testBoard[place3]){
       return testBoard[place1];
     } else {
-      return "E";
+      return "0";
     }
   }
 
