@@ -1,11 +1,139 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <script type="text/javascript" src="{{ url_for('static', filename='js/test.js') }}"></script>
-    <title>Title</title>
+    <title>Tic Tac Toe</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Amatic SC">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+
+    <link rel='stylesheet prefetch'
+          href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css'>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+
 </head>
+
 <body>
-    <h1>Welcome</h1>
+
+<!-- <style>
+h1 {
+  filter: url(#chalk)
+}
+
+</style> -->
+
+<div class="container-fluid text-center bg">
+
+
+    <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
+        <svg id="title" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 150">
+            <text x="300" y="94" fill="rgba(255,255,255,0.7)" filter="url(#chalk)" font-size="99" text-anchor="middle"
+                  font-weight="400">TIC TAC TOE
+            </text>
+        </svg>
+    </div>
+
+    <div class="row">
+        <main class="gameBoard col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-4">
+            <svg class="mySVG" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 600 600"
+                 preserveAspectRatio="xMinyMin meet">
+
+                <defs>
+                    <filter id="chalk" height="10" width="10" color-interpolation-filters="sRGB" y="-0.5" x="-0.3"
+                            filterUnits="objectBoundingBox">
+                        <feTurbulence baseFrequency="6.9" seed="115" result="result1" numOctaves="2" type="turbulence"/>
+                        <feDisplacementMap scale="9" yChannelSelector="G" in2="result1" xChannelSelector="R"
+                                           in="SourceGraphic"/>
+                    </filter>
+                </defs>
+
+                <!--------hide the chalk grid lines to 'draw' them--------------->
+                <line filter="url(#chalk)" id="v1" x1="201" y1="10" x2="200" y2="590" stroke="rgba(255,255,255,0.7)"
+                      stroke-width="5" stroke-dasharray="600" stroke-dashoffset="600"/>
+
+                <line filter="url(#chalk)" id="v2" x1="400" y1="10" x2="401" y2="590"
+                      style="stroke:rgba(255,255,255,0.7); stroke-width: 5; stroke-dasharray: 600; stroke-dashoffset: 600"/>
+
+                <line filter="url(#chalk)" id="h1" x1="10" y1="201" x2="590" y2="200"
+                      style="stroke:rgba(255,255,255,0.7); stroke-width: 5; stroke-dasharray: 600; stroke-dashoffset: 600"/>
+
+                <line filter="url(#chalk)" id="h2" x1="10" y1="400" x2="590" y2="402"
+                      style="stroke:rgba(255,255,255,0.7); stroke-width: 5; stroke-dasharray: 600; stroke-dashoffset: 600"/>
+
+                <!-------create the 'tiles'---------->
+
+                <div class="container boardTiles">
+                    <div class="row tileRow">
+                        <svg viewbox="0 0 200 200" preserveAspectRatio="xMinyMin meet" id="t0"
+                             class="col-xs-4 tile"></svg>
+                        <svg viewbox="0 0 200 200" preserveAspectRatio="xMinyMin meet" id="t1"
+                             class="col-xs-4 tile"></svg>
+                        <svg viewbox="0 0 200 200" preserveAspectRatio="xMinyMin meet" id="t2"
+                             class="col-xs-4 tile"></svg>
+                    </div>
+
+                    <div class="row tileRow">
+                        <svg viewbox="0 0 200 200" preserveAspectRatio="xMinyMin meet" id="t3"
+                             class="col-xs-4 tile"></svg>
+                        <svg viewbox="0 0 200 200" preserveAspectRatio="xMinyMin meet" id="t4"
+                             class="col-xs-4 tile"></svg>
+                        <svg viewbox="0 0 200 200" preserveAspectRatio="xMinyMin meet" id="t5"
+                             class="col-xs-4 tile"></svg>
+                    </div>
+
+                    <div class="row tileRow">
+                        <svg viewbox="0 0 200 200" preserveAspectRatio="xMinyMin meet" id="t6"
+                             class="col-xs-4 tile"></svg>
+                        <svg viewbox="0 0 200 200" preserveAspectRatio="xMinyMin meet" id="t7"
+                             class="col-xs-4 tile"></svg>
+                        <svg viewbox="0 0 200 200" preserveAspectRatio="xMinyMin meet" id="t8"
+                             class="col-xs-4 tile"></svg>
+                    </div>
+                </div>
+
+
+                <div id="cross1">
+                    <line id="d1" filter="url(#chalk)" x1="40" y1="40" x2="160" y2="160"
+                          style="stroke:rgba(255,255,255,0.7); stroke-width: 5; stroke-dasharray: 200; stroke-dashoffset: 200"></line>
+                </div>
+                <div id="cross2">
+                    <line id="d2" filter="url(#chalk)" x1="160" y1="40" x2="40" y2="160"
+                          style="stroke:rgba(255,255,255,0.7); stroke-width: 5; stroke-dasharray: 200; stroke-dashoffset: 200"></line>
+                </div>
+
+                <div id="circleDiv">
+                    <circle id="c" filter="url(#chalk)" cx="100" cy="100" r="60"
+                            style="fill:none; stroke:rgba(255,255,255,0.7); stroke-width: 5; stroke-dasharray: 390; stroke-dashoffset: 390"></circle>
+                </div>
+
+            </svg>
+
+        </main>
+
+
+        <div class="col-xs-12 col-md-6">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 100">
+                <text class="message" x="300" y="80" fill="rgba(255,255,255,0.7)" filter="url(#chalk)" font-size="90"
+                      text-anchor="middle" font-weight="400">Choose
+                    <tspan class="ex">X</tspan>
+                    or
+                    <tspan class="oh">O</tspan>
+                </text>
+            </svg>
+        </div>
+
+    </div>
+</div>
+<!--container-->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script>
+
+
+<script src="{{ url_for('static', filename='js/index.js') }}"></script>
+
+
 </body>
+
 </html>
