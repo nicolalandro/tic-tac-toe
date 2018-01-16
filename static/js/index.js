@@ -84,7 +84,6 @@ function playerMove() {
         console.log("train data: [" + board + "," + turns + "]");
 
         if(win(board) === userSign) {
-
           setMessage('YOU WIN!');
           setTimeout(startGame, 2000);
         } else if(turns === 9) {
@@ -94,13 +93,13 @@ function playerMove() {
 
         } else {
           setMessage('Computers move');
-          setTimeout(compMove,1000);
+          setTimeout(compMoveWithMinMax,1000);
         }
       }
     });
   }
 
-function compMove() {
+function compMoveWithMinMax() {
     minimax();
 
     $('.tile').each(function(i) {
@@ -122,11 +121,9 @@ function compMove() {
     console.log("train target: [" + board + "]");
 
     if(win(board) === compSign) {
-
       setMessage('You Lose :(');
       setTimeout(startGame, 2000);
     } else if(turns === 9) {
-
       setMessage('This game is a tie');
       setTimeout(startGame, 2000);
     } else {
