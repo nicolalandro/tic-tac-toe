@@ -23,14 +23,22 @@ def ai_game_for_O():
 def add_feature():
     sring_array = request.get_json()
     int_array = list(map(int, sring_array))
+
+    with open("DecisionTree/training_data/features.ls", "a") as myfile:
+        myfile.write(str(int_array) + "\n")
+
     return jsonify(int_array)
 
 
 @app.route('/api/add_label', methods=['POST'])
 def add_label():
-    sring_array = request.get_json()
-    int_array = int(sring_array)
-    return jsonify(int_array)
+    sring = request.get_json()
+    inte = int(sring)
+
+    with open("DecisionTree/training_data/labels.ls", "a") as myfile:
+        myfile.write(str(inte) + "\n")
+
+    return jsonify(inte)
 
 
 if __name__ == '__main__':
