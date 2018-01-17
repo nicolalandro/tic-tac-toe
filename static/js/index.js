@@ -81,7 +81,7 @@ function playerMove() {
         turns += 1;
         t.addClass('full');
 
-        console.log("train data: [" + board + "," + turns + "]");
+//        console.log("train data: [" + board + "," + turns + "]");
 
         if(win(board) === userSign) {
           setMessage('YOU WIN!');
@@ -93,7 +93,7 @@ function playerMove() {
 
         } else {
           setMessage('Computers move');
-          setTimeout(compMoveWithMinMax,1000);
+//          setTimeout(compMoveWithMinMax,1000);
           compMove();
         }
       }
@@ -106,8 +106,37 @@ function compMove() {
                         method: "POST",
                         contentType: "application/json",
                         data: JSON.stringify(board),
-                        success: function(t) {
-                            console.log(t);
+                        success: function(res) {
+                            console.log(res);
+                            console.log(board[parseInt(res.results)]);
+
+                            if(board[parseInt(res.results)] === "0"){
+                                console.log("My AI");
+                                var id = "#t" + res.results;
+                                console.log(id);
+                                var t = $(id);
+                                drawNaught(t);
+                                board[parseInt(res.results)] = "2"
+                                t.addClass('full');
+
+                                turns += 1;
+                                userTurn = true;
+
+                                if(win(board) === compSign) {
+                                      setMessage('You Lose :(');
+                                      setTimeout(startGame, 2000);
+                                } else if(turns === 9) {
+                                      setMessage('This game is a tie');
+                                      setTimeout(startGame, 2000);
+                                } else {
+                                      setMessage('Your move');
+                                }
+                            }
+                            else{
+                                console.log("Other AI");
+                                compMoveWithMinMax();
+                            }
+
                         }
             });
 }
@@ -131,7 +160,7 @@ function compMoveWithMinMax() {
     turns += 1;
     userTurn = true;
 //    console.log(board + " " + turns);
-    console.log("train target: [" + board + "]");
+//    console.log("train target: [" + board + "]");
 
     if(win(board) === compSign) {
       setMessage('You Lose :(');
