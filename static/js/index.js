@@ -40,6 +40,7 @@ function setMessage(str) {
   }
 
 function startGame() {
+    old_send = new Array()
     resetBoard();
 
      userSign = "1";
@@ -81,28 +82,26 @@ function playerMove() {
         turns += 1;
         t.addClass('full');
 
-        console.log("train data: [" + board + "," + turns + "]");
+//        console.log("train data: [" + board + "," + turns + "]");
 
         if(win(board) === userSign) {
           setMessage('YOU WIN!');
           setTimeout(startGame, 2000);
         } else if(turns === 9) {
-
           setMessage('No winners this time');
           setTimeout(startGame, 2000);
-
         } else {
           setMessage('Computers move');
           setTimeout(compMoveWithMinMax,1000);
-          compMove();
+          add_feature()
         }
       }
     });
   }
 
-function compMove() {
+function add_feature() {
     $.ajax({
-                        url: "/api/decision_tree_for_o",
+                        url: "/api/add_feature",
                         method: "POST",
                         contentType: "application/json",
                         data: JSON.stringify(board),
@@ -111,6 +110,20 @@ function compMove() {
                         }
             });
 }
+
+function add_label(n_x) {
+    $.ajax({
+                        url: "/api/add_label",
+                        method: "POST",
+                        contentType: "application/json",
+                        data: JSON.stringify(n_x),
+                        success: function(t) {
+                            console.log(t);
+                        }
+            });
+}
+
+var old_send = new Array();
 
 function compMoveWithMinMax() {
     minimax();
@@ -123,6 +136,10 @@ function compMoveWithMinMax() {
           drawCross(t);
         } else {
           drawNaught(t);
+          if(! old_send.includes(i)){
+             old_send.push(i)
+             add_label(i)
+          }
         }
         t.addClass('full');
       }
@@ -131,11 +148,12 @@ function compMoveWithMinMax() {
     turns += 1;
     userTurn = true;
 //    console.log(board + " " + turns);
-    console.log("train target: [" + board + "]");
+//    console.log("train target: [" + board + "]");
 
     if(win(board) === compSign) {
       setMessage('You Lose :(');
       setTimeout(startGame, 2000);
+      old_send = new Array()
     } else if(turns === 9) {
       setMessage('This game is a tie');
       setTimeout(startGame, 2000);

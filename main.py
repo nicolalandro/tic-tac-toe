@@ -19,5 +19,19 @@ def ai_game_for_O():
     return jsonify(results=str(decision_tree.predict([int_array])[0]))
 
 
+@app.route('/api/add_feature', methods=['POST'])
+def add_feature():
+    sring_array = request.get_json()
+    int_array = list(map(int, sring_array))
+    return jsonify(int_array)
+
+
+@app.route('/api/add_label', methods=['POST'])
+def add_label():
+    sring_array = request.get_json()
+    int_array = int(sring_array)
+    return jsonify(int_array)
+
+
 if __name__ == '__main__':
     app.run()
